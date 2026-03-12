@@ -1,0 +1,59 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Borrow - Maintenance Office</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <img src="Arellano_University_logo.png" alt="University Logo" class="logo">
+    <div class="header-text">
+      <h1>ARELLANO UNIVERSITY<br>ELISA ESGUERRA CAMPUS</h1>
+      <p>FOR GOD AND COUNTRY</p>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+        <button onclick="location.href='dashboard.html'">Dashboard</button>
+        <button onclick="location.href='return.html'">Return</button>
+        <button onclick="location.href='report.html'">Report</button>
+        <button onclick="location.href='index.html'">Sign Out</button>
+    </aside>
+
+    <main class="main-content">
+      <h2>Borrow Item</h2>
+      <form id="borrow-form">
+        <label for="item">Item Name:</label><br>
+
+
+
+        <select id="item" name="item" style="padding: 12px; width: 300px; border: 2px solid #004080; border-radius: 8px; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" required>
+          <option value="">Select Item</option>
+        </select><br><br>
+
+
+
+        <label for="borrower">Borrower Name:</label><br>
+        <input type="text" id="borrower" name="borrower" style="padding: 12px; width: 300px; border: 2px solid #004080; border-radius: 8px; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" required><br><br>
+
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id="borrow-list">
+        <h3>Borrowed Items</h3>
+        <ul id="items"></ul>
+      </div>
+    </main>
+  </div>
+
+
+  <script src="borrowing-system.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+/* Base layout */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('0.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header */
+  .dashboard-header {
+    background: rgba(27, 34, 87, 0.9);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .dashboard-header .logo {
+    width: 80px;
+    margin-right: 20px;
+  }
+  
+  .dashboard-header h1 {
+    margin: 0;
+    font-size: 20px;
+  }
+  
+  .dashboard-header p {
+    margin: 5px 0 0;
+    font-size: 14px;
+  }
+  
+  /* Layout container */
+  .dashboard-container {
+    flex: 1;
+    display: flex;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 200px;
+    background: rgba(0, 40, 100, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .sidebar button {
+    background: #004080;
+    color: white;
+    border: none;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .sidebar button:hover {
+    background: #0059b3;
+  }
+  
+  /* Main content */
+  .main-content {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.85);
+    margin: 20px;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+  }
+  
+  .main-content h2 {
+    margin-bottom: 20px;
+    color: #1b2257;
+  }
+  
+  /* Report Section */
+  #report-section {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  #report-section h2 {
+    color: #1b2257;
+    margin-bottom: 15px;
+  }
+  
+  #report-section label {
+    font-weight: bold;
+    color: #002866;
+  }
+  
+  #report-section input,
+  #report-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Report Form Button */
+  #report-form button {
+    background: #004080;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  #report-form button:hover {
+    background: #0059b3;
+  }
+  
+  /* Reports List */
+  #reports-list {
+    margin-top: 20px;
+  }
+  
+  #reports-list h3 {
+    color: #1b2257;
+    margin-bottom: 10px;
+  }
+  
+  #reports-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #reports-list li {
+    background: rgba(0, 40, 100, 0.1);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    color: #1b2257;
+    font-weight: bold;
+  }

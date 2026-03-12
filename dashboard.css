@@ -1,0 +1,150 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('0.png') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.dashboard-header {
+  background: rgba(27, 34, 87, 0.9);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.dashboard-header .logo {
+  width: 80px;
+  margin-right: 20px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.dashboard-header p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+/* Layout container */
+.dashboard-container {
+  flex: 1;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background: rgba(0, 40, 100, 0.9);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sidebar button {
+  background: #004080;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sidebar button:hover {
+  background: #0059b3;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.85);
+  margin: 20px;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+}
+
+.main-content button{
+  background: #004080;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+.main-content h2 {
+  margin-bottom: 20px;
+  color: #1b2257;
+}
+
+/* Borrow Section */
+#borrow-section {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+#borrow-section h2 {
+  color: #1b2257;
+  margin-bottom: 15px;
+}
+
+#borrow-section p {
+  font-weight: bold;
+  color: #002866;
+  margin-top: 15px;
+}
+
+/* Borrow Buttons */
+#borrow-section button {
+  background: #004080;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#borrow-section button:hover {
+  background: #0059b3;
+}
+
+/* Borrowed Items List */
+#borrow-list {
+  margin-top: 20px;
+}
+
+#borrow-list h3 {
+  color: #1b2257;
+  margin-bottom: 10px;
+}
+
+#borrow-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#borrow-list li {
+  background: rgba(0, 40, 100, 0.1);
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  color: #1b2257;
+  font-weight: bold;
+}

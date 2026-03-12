@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+
+  <script src="borrowing-system.js" defer></script>
+
+</head>
+<body>
+  <!-- Header -->
+  <div class="dashboard-header">
+    <img src="Arellano_University_logo.png" alt="University Logo" class="logo">
+    <div>
+      <h1>Admin Dashboard</h1>
+      <p>Maintenance Office Borrowing System</p>
+    </div>
+  </div>
+
+  <!-- Layout -->
+  <div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <button onclick="showSection('stats')"> Statistics</button>
+      <button onclick="location.href='borrowed-items.html'"> Borrowed Items</button>
+
+      <button onclick="location.href='reported-items.html'"> Reported Items</button>
+
+      <button onclick="location.href='index.html'"> Sign Out</button>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Stats Section (default) -->
+      <section id="stats-section">
+        <h2>Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Available</h3>
+            <p id="availableCount">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Borrowed</h3>
+            <p id="borrowedCount">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Reported</h3>
+            <p id="reportedCount">0</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Borrowed Items -->
+      <section id="borrow-list" style="display:none;">
+        <h2>Borrowed Items <span class="section-count" id="borrowed-list-count"></span></h2>
+        <ul id="borrowedItems"></ul>
+      </section>
+
+      <!-- Reported Items -->
+      <section id="report-list" style="display:none;">
+        <h2>Reported Items <span class="section-count" id="reported-list-count"></span></h2>
+        <ul id="reportedItems"></ul>
+      </section>
+
+      <!-- Users -->
+      <section id="users-section" style="display:none;">
+        <h2>Users <span class="section-count" id="users-list-count"></span></h2>
+        <ul id="usersList"></ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

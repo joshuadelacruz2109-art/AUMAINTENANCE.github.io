@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title-Reported Items - Maintenance Office</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <img src="Arellano_University_logo.png" alt="University Logo" class="logo">
+    <div class="header-text">
+      <h1>ARELLANO UNIVERSITY<br>ELISA ESGUERRA CAMPUS</h1>
+      <p>Reported Items Report</p>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">  
+      <button onclick="location.href='admin-dashboard.html'">Admin Dashboard</button>
+      <button onclick="location.href='index.html'">Sign Out</button>
+    </aside>
+
+    <main class="main-content">
+      <h2>Reported Items</h2>
+      <p>Total Reported: <span id="reportedCount">0</span></p>
+      
+      <div class="items-grid">
+        <ul id="reportedItemsList">
+          <li>No reported items yet.</li>
+        </ul>
+      </div>
+      
+      <button onclick="printReport()">🖨️ Print Report</button>
+    </main>
+  </div>
+
+  <script src="borrowing-system.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Show reported items from localStorage
+      const reportedItems = JSON.parse(localStorage.getItem('reportedItems') || '[]');
+      const list = document.getElementById('reportedItemsList');
+      const count = document.getElementById('reportedCount');
+      
+      count.textContent = reportedItems.length;
+      
+      if (reportedItems.length === 0) {
+        list.innerHTML = '<li>No reported items.</li>';
+      } else {
+        list.innerHTML = reportedItems.map(record => `
+          <li class="reported-item">
+            <strong>${record.item}</strong><br>
+            Issue: ${record.issue}<br>
+            Reported: <em>${record.date}</em>
+          </li>
+        `).join('');
+      }
+    });
+
+    function printReport() {
+      window.print();
+    }
+  </script>
+
+  <style>
+    .items-grid { max-width: 800px; margin: 20px 0; }
+    .reported-item { 
+      background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+      padding: 20px; 
+      margin: 10px 0; 
+      border-radius: 12px; 
+      border-left: 5px solid #f39c12; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    @media print {
+      .sidebar, button { display: none; }
+      .reported-item { break-inside: avoid; }
+    }
+  </style>
+</body>
+</html>

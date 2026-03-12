@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report - Maintenance Office</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <img src="Arellano_University_logo.png" alt="University Logo" class="logo">
+    <div class="header-text">
+      <h1>ARELLANO UNIVERSITY<br>ELISA ESGUERRA CAMPUS</h1>
+      <p>FOR GOD AND COUNTRY</p>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+        <button onclick="location.href='dashboard.html'">Dashboard</button>
+        <button onclick="location.href='borrow.html'">Borrow</button>
+        <button onclick="location.href='return.html'">Return</button>
+        <button onclick="location.href='index.html'">Sign Out</button>
+    </aside>
+
+    <main class="main-content">
+      <h2>Report Issue</h2>
+      <form id="report-form">
+
+        <label for="report-item">Item Name:</label><br>
+        <select id="report-item" name="report-item" style="padding: 12px; width: 300px; border: 2px solid #004080; border-radius: 8px; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" required>
+          <option value="">Select borrowed item to report</option>
+        </select><br><br>
+
+
+        <label for="issue">Issue Description:</label><br>
+        <textarea id="issue" name="issue" rows="4" style="padding: 12px; width: 300px; height: 120px; border: 2px solid #004080; border-radius: 8px; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); resize: vertical;" required></textarea><br><br>
+
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id="report-list">
+        <h3>Reported Issues</h3>
+        <ul id="issues"></ul>
+      </div>
+    </main>
+  </div>
+
+
+  <script src="borrowing-system.js"></script>
+
+</body>
+</html>
