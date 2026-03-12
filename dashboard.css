@@ -148,3 +148,101 @@ body {
   color: #1b2257;
   font-weight: bold;
 }
+
+/* Responsive Design - Tablet and Mobile */
+@media (max-width: 768px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .dashboard-header {
+    padding: 15px 10px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dashboard-header .logo {
+    width: 60px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 18px;
+  }
+
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    order: 2;
+    padding: 15px 10px;
+  }
+
+  .sidebar button {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0;
+    font-size: 16px;
+  }
+
+  .main-content {
+    margin: 10px;
+    padding: 20px 15px;
+    order: 1;
+  }
+
+  input, select, textarea {
+    max-width: 100% !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #borrow-section input,
+  #return-form input,
+  #return-form select,
+  #report-form input,
+  #report-form select,
+  #report-form textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header {
+    padding: 10px 5px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 16px;
+  }
+
+  .main-content {
+    margin: 5px;
+    padding: 15px 10px;
+  }
+
+  .sidebar {
+    padding: 10px 5px;
+  }
+
+  .sidebar button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* Ensure images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Print styles preserved */
+@media print {
+  .sidebar, button:not([type="submit"]) { display: none; }
+}

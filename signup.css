@@ -97,3 +97,43 @@ body {
 .signup-box a:hover {
   color: #cce0ff;
 }
+
+/* Responsive Design for Signup */
+@media (max-width: 768px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .signup-panel {
+    width: 95vw;
+    max-width: 400px;
+    padding: 30px 20px;
+    margin: 20px;
+  }
+
+  .signup-box .title-text {
+    font-size: 20px;
+  }
+
+  .signup-box input {
+    font-size: 16px; /* Prevent zoom */
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-panel {
+    padding: 25px 15px;
+    margin: 10px;
+  }
+
+  .signup-box .title-text {
+    font-size: 18px;
+  }
+}
+
+/* Images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
