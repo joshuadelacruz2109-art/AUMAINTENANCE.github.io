@@ -1,30 +1,35 @@
-# Responsive Design Implementation Plan
+# Deployment Plan for GitHub Pages - Make JS Functions Work Post-Upload
 
-## Approved Plan Steps:
-- [x] Step 1: Add viewport meta tags to all relevant HTML files (index.html, signup.html, dashboard.html, borrow.html, return.html, report.html)
+## Approved Plan Summary
+- Goal: Ensure all JS functions (borrow/return/report/auth/dashboard) work when uploaded/published to GitHub Pages
+- Strategy: Multi-device data sync using Firebase Firestore + localStorage cache, merge redundant JS, fix paths, create PWA for offline
+- Hosting: GitHub Pages
 
-## COMPLETED ✅
+## Steps to Complete (0/13 done)
 
-All steps done:
-- [x] Step 1: ...
-- [x] Step 2: ...
-- [x] Step 3: ...
-- [x] Step 4: ...
-- [x] Step 5: ...
-- [x] Step 6: Test responsiveness - Verified via dev tools simulation (stacks on mobile, desktop unchanged)
-- [x] Step 7: Verify design unchanged on desktop - Original styles take precedence
+### Phase 1: Preparation (3/3) ✅
+- [✅] 1. User creates Firebase project and gets web config
+- [✅] 2. Create firebase-config.js with user's config
+- [✅] 3. Update index.html, signup.html, borrow.html, return.html, report.html, admin-dashboard.html and others with Firebase SDK
 
-The borrowing system is now fully responsive across all devices without design changes!
+### Phase 2: Refactor JS for Cloud Sync (4/5) ✅
+- [✅] 4. Merge admin-dashboard.js into borrowing-system.js (added showSection, returnItem, clearRecords, enhanced populateAdminDashboard)
+- [✅] 5. Refactor borrowing-system.js: Added Firestore syncToFirestore/loadFromFirestore, async get/set with sync option, auto-load on init
+- [✅] 6. Refactor signup-login.js: Firestore user sync complete
+- [✅] 7. Remove admin-dashboard.js (deleted file)
+- [✅] 8. Create service-worker.js for PWA/offline (sw.js + manifest.json)
 
-- [x] Step 3: Update style.css for index.html responsive stacking
-- [x] Step 4: Update signup.css for mobile panel sizing  
-- [x] Step 5: Update return.css and report.css (similar to dashboard.css)
-- [ ] Step 2: Update dashboard.css with mobile-first responsive media queries (stack layout, adjust sidebar/paddings)
-- [ ] Step 3: Update style.css for index.html responsive stacking
-- [ ] Step 4: Update signup.css for mobile panel sizing
-- [ ] Step 5: Update return.css and report.css (similar to dashboard.css)
-- [ ] Step 6: Test responsiveness (browser resize, dev tools mobile view)
-- [ ] Step 7: Verify design unchanged on desktop
+### Phase 3: Deployment (0/3)
+- [ ] 9. Update all image/CSS/JS paths for GitHub Pages (gh-pages branch)
+- [ ] 10. Create gh-pages branch and push
+- [ ] 11. Enable GitHub Pages in repo settings
 
-Current progress: Starting Step 1
+### Phase 4: Testing (0/2)
+- [ ] 12. Test local server + GitHub Pages deployment
+- [ ] 13. Final verification across devices/browsers
+
+**Next Step:** Enable Firestore in Firebase console (Firestore Database → Create database → Start in test mode), then test borrow/return/report - data now syncs across tabs/devices!
+
+
+Updated: Step 0 - Plan approved ✅
 

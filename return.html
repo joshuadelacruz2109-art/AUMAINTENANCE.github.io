@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+<script type="module">
+  import { firebaseConfig } from './firebase-config.js';
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+  
+  // Initialize Firebase
+  window.firebaseApp = initializeApp(firebaseConfig);
+  window.db = getFirestore(window.firebaseApp);
+  window.auth = getAuth(window.firebaseApp);
+</script>
+
 <head>
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

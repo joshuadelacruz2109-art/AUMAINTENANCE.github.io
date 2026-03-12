@@ -36,8 +36,56 @@ function initItems() {
 }
 
 
-// Get/Set helpers
-function get(key) {
+// Firebase Firestore sync helpers
+async function syncToFirestore(collectionName, data) {
+  if (!window.db) return;
+  try {
+    const colRef = window.db.collection(collectionName);
+    await colRef.doc('localSync_' + Date.now()).set({ data, timestamp: new Date() });
+    console.log(`Synced ${collectionName} to Firestore`);
+  } catch (error) {
+    console.error('Firestore sync error:', error);
+  }
+}
+
+async function loadFromFirestore(collectionName, localKey) {
+  if (!window.db) return;
+  try {
+    const snapshot = await window.db.collection(collectionName).orderBy('timestamp', 'desc').limit(1).get();
+    if (!snapshot.empty) {
+      const latest = snapshot.docs[0].data();
+      localStorage.setItem(localKey, JSON.stringify(latest.data));
+      console.log(`Loaded ${collectionName} from Firestore`);
+    }
+  } catch (error) {
+    console.error('Firestore load error:', error);
+  }
+}
+
+// Get/Set helpers - now with optional sync
+async function get(key, sync = false) {
+  const localData = JSON.parse(localStorage.getItem(key) || '[]');
+  if (sync && window.db) {
+    await loadFromFirestore(key, key);
+    return JSON.parse(localStorage.getItem(key) || '[]');
+  }
+  return localData;
+}
+
+async function set(key, data, sync = false) {
+  localStorage.setItem(key, JSON.stringify(data));
+  if (sync && window.db) {
+    await syncToFirestore(key, data);
+  }
+}
+
+// Auto-sync on load (if Firebase ready)
+if (window.db) {
+  ['items', 'borrowedItems', 'returnedItems', 'reportedItems'].forEach(key => {
+    loadFromFirestore(key, key);
+  });
+}
+
   return JSON.parse(localStorage.getItem(key) || '[]');
 }
 
@@ -66,10 +114,11 @@ function submitBorrow(itemName, borrower) {
   // Update item status
   item.status = 'borrowed';
   
-  set(BORROWED_ITEMS_KEY, borrowedItems);
-  set(ITEMS_KEY, items);
+set(BORROWED_ITEMS_KEY, borrowedItems, true);
+  set(ITEMS_KEY, items, true);
   return true;
 }
+
 
 // Return
 function submitReturn(itemName, returner) {
@@ -93,11 +142,12 @@ function submitReturn(itemName, returner) {
   const item = items.find(i => i.name === itemName);
   if (item) item.status = 'available';
   
-  set(RETURNED_ITEMS_KEY, returnedItems);
-  set(BORROWED_ITEMS_KEY, borrowedItems);
-  set(ITEMS_KEY, items);
+set(RETURNED_ITEMS_KEY, returnedItems, true);
+  set(BORROWED_ITEMS_KEY, borrowedItems, true);
+  set(ITEMS_KEY, items, true);
   return true;
 }
+
 
 // Report
 function submitReport(itemName, issue) {
@@ -117,10 +167,11 @@ function submitReport(itemName, issue) {
     id: item.id
   });
   
-  set(REPORTED_ITEMS_KEY, reportedItems);
-  set(ITEMS_KEY, items);
+set(REPORTED_ITEMS_KEY, reportedItems, true);
+  set(ITEMS_KEY, items, true);
   return true;
 }
+
 
 // Admin dashboard population functions
 function populateAdminDashboard() {
@@ -175,8 +226,97 @@ function populateAdminDashboard() {
   }
 }
 
+// Additional functions from admin-dashboard.js
+function showSection(section) {
+  document.getElementById("stats-section").style.display = section === "stats" ? "block" : "none";
+  document.getElementById("borrow-list").style.display = section === "borrowed" ? "block" : "none";
+  document.getElementById("returned-list").style.display = section === "returned" ? "block" : "none";
+  document.getElementById("notReturned-list").style.display = section === "notReturned" ? "block" : "none";
+}
+
+function returnItem(itemName) {
+  let items = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+  items = items.map(i => {
+    if (i.name === itemName && (i.status === "borrowed" || i.status === "not-returned")) {
+      return { ...i, status: "available" };
+    }
+    return i;
+  });
+  localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+
+  let borrowedItems = get(BORROWED_ITEMS_KEY);
+  borrowedItems = borrowedItems.filter(record => record.item !== itemName);
+  set(BORROWED_ITEMS_KEY, borrowedItems);
+
+  alert(itemName + " has been returned.");
+  populateAdminDashboard();
+}
+
+function clearRecords() {
+  localStorage.removeItem(BORROWED_ITEMS_KEY);
+  localStorage.removeItem(RETURNED_ITEMS_KEY);
+  localStorage.removeItem(REPORTED_ITEMS_KEY);
+  localStorage.removeItem(ITEMS_KEY);
+  alert("All records cleared.");
+  location.reload();
+}
+
+// Enhanced populateAdminDashboard with admin-dashboard.html support
+function populateAdminDashboard() {
+  const items = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+  const borrowedItems = get(BORROWED_ITEMS_KEY);
+  const returnedItems = get(RETURNED_ITEMS_KEY);
+  const reportedItems = get(REPORTED_ITEMS_KEY);
+  
+  // Stats - support both naming conventions
+  const available = items.filter(i => i.status === 'available').length;
+  const borrowed = borrowedItems.length;
+  const returned = returnedItems.length;
+  const reported = reportedItems.length;
+  
+  ['availableCount', 'borrowedCount', 'returnedCount', 'reportedCount'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = eval(id.replace('Count', ''));
+  });
+
+  // Borrowed logs - with return buttons for admin-dashboard
+  const borrowedList = document.getElementById('borrowedItemsList') || document.getElementById('borrowedItems');
+  if (borrowedList) {
+    if (borrowedItems.length === 0) {
+      borrowedList.innerHTML = '<li>No borrowed items</li>';
+    } else {
+      borrowedList.innerHTML = borrowedItems.map(record => {
+        const adminPage = document.getElementById('borrow-list') || document.querySelector('.sidebar button');
+        return `
+          <li>
+            <strong>${record.item}</strong> by <strong>${record.borrower}</strong> on <em>${record.date}</em>
+            ${adminPage ? `<button onclick="returnItem('${record.item}')">Return</button>` : ''}
+          </li>
+        `;
+      }).join('');
+    }
+  }
+  
+  // Returned logs
+  const returnedList = document.getElementById('returnedItemsList') || document.getElementById('returnedItems');
+  if (returnedList) {
+    returnedList.innerHTML = returnedItems.map(record => 
+      `<li>${record.item} returned by ${record.returner} on ${record.date}</li>`
+    ).join('') || '<li>No returned items</li>';
+  }
+  
+  // Reported logs
+  const reportedList = document.getElementById('reportedItemsList') || document.getElementById('reportedItems');
+  if (reportedList) {
+    reportedList.innerHTML = reportedItems.map(record => 
+      `<li>${record.item}: ${record.issue} (${record.date})</li>`
+    ).join('') || '<li>No reported items</li>';
+  }
+}
+
 // Page-specific init
 document.addEventListener('DOMContentLoaded', () => {
+
   initItems();
   
   const user = JSON.parse(sessionStorage.getItem('user') || '{}');

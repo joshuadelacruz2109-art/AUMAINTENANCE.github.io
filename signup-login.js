@@ -1,8 +1,16 @@
 // signup-login.js
 
 // Store accounts in localStorage
-function saveAccount(fullName, email, password) {
+async function saveAccount(fullName, email, password) {
     const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+    const accountsKey = "accounts";
+    
+    // Sync from Firestore first
+    await loadFromFirestore('accounts', accountsKey);
+    
+    // Reload accounts from localStorage after sync
+    let accounts = JSON.parse(localStorage.getItem(accountsKey) || '[]');
+
     
     // Check if email already exists
     const existing = accounts.find(acc => acc.email === email);
@@ -12,10 +20,13 @@ function saveAccount(fullName, email, password) {
     }
   
     accounts.push({ fullName, email, password, role: "user" }); // default role
-    localStorage.setItem("accounts", JSON.stringify(accounts));
+localStorage.setItem(accountsKey, JSON.stringify(accounts));
+    // Sync to Firestore
+    await syncToFirestore('accounts', accounts);
     alert("Account created successfully!");
     return true;
   }
+
   
   // Validate sign-up form
   function validateSignupForm(event) {
@@ -49,10 +60,13 @@ function saveAccount(fullName, email, password) {
     const email = document.querySelector('.login-box input[placeholder="Email"]').value.trim();
     const password = document.querySelector('.login-box input[placeholder="Password"]').value;
   
-    const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
-  
+    const accountsKey = "accounts";
+    await loadFromFirestore('accounts', accountsKey);
+    const accounts = JSON.parse(localStorage.getItem(accountsKey) || '[]');
+
     // Hardcoded admin account (you can also store it in localStorage)
     const adminEmail = "admin@cc";
+
     const adminPassword = "testadmin";
   
     if (email === adminEmail && password === adminPassword) {
